@@ -11,19 +11,19 @@ public class Square {
     }
 
     public boolean isContained(Coordinate coordinate){
-        boolean isCoordinateInXInterval = coordinate.getxCoordinate() < getMax().getxCoordinate() && coordinate.getxCoordinate() > getMin().getxCoordinate();
-        boolean isCoordinateInYInterval = coordinate.getyCoordinate() < getMax().getyCoordinate() && coordinate.getyCoordinate() > getMin().getyCoordinate();
+        boolean isCoordinateInXInterval = coordinate.getLatitude() < getMax().getLatitude() && coordinate.getLatitude() > getMin().getLatitude();
+        boolean isCoordinateInYInterval = coordinate.getLongitude() < getMax().getLongitude() && coordinate.getLongitude() > getMin().getLongitude();
         return isCoordinateInXInterval && isCoordinateInYInterval;
     }
 
     public void createSquare() {
-        float xMin = coordinates.get(0).getxCoordinate();
-        float xMax = coordinates.get(0).getxCoordinate();
-        float yMin = coordinates.get(0).getyCoordinate();
-        float yMax = coordinates.get(0).getyCoordinate();
+        double xMin = coordinates.get(0).getLatitude();
+        double xMax = coordinates.get(0).getLatitude();
+        double yMin = coordinates.get(0).getLongitude();
+        double yMax = coordinates.get(0).getLongitude();
         for (Coordinate coordinate : coordinates) {
-            float x = coordinate.getxCoordinate();
-            float y = coordinate.getyCoordinate();
+            double x = coordinate.getLatitude();
+            double y = coordinate.getLongitude();
             if(xMin > x){
                 xMin = x;
             }

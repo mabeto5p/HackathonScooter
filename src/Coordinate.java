@@ -1,25 +1,25 @@
 public class Coordinate {
-    private float xCoordinate;
-    private float yCoordinate;
+    private double latitude;
+    private double longitude;
 
-    public Coordinate(float xCoordinate, float yCoordinate){
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+    public Coordinate(double latitude, double longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public float getyCoordinate() {
-        return yCoordinate;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setyCoordinate(float yCoordinate) {
-        this.yCoordinate = yCoordinate;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
-    public float getxCoordinate() {
-        return xCoordinate;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setxCoordinate(float xCoordinate) {
-        this.xCoordinate = xCoordinate;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

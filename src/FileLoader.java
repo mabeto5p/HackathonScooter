@@ -4,25 +4,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileLoader {
-    String fileContent;
     List<String> fileLines;
-
-
+    File fileLocation = null;
 
     public FileLoader(){
         fileLines = readFile();
     }
 
+    long previousFileLength = 0;
+
+    public void continuousReading(){
+
+        try {
+            BufferedInputStream reader = new BufferedInputStream(new FileInputStream(fileLocation));
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        while(true) {
+            if (fileLocation.length() > previousFileLength) {
+                readFile(previousFileLength);
+                previousFileLength = fileLocation.length();
+            }
+        }
+    }
+
+
+
+    public void readFile(long fileLength){
+        String line = null;
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(fileLocation));
+            in.skip(fileLength);
+            while((line = in.readLine()) != null)
+            {
+                makeDataPointForStringAndAddItToList(line);
+            }
+            in.close();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void makeDataPointForStringAndAddItToList (String line) {
+        if(line.contains("GNGGA")){
+            Coordinate coordinate = parseToCoordinatePoint(line);
+            System.out.println(coordinate.toString());
+        }
+    }
+
     public List<String> readFile(){
-        JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(null);
-        File file = null;
-        if(returnVal == JFileChooser.APPROVE_OPTION){
-            file = chooser.getSelectedFile();
+        if(fileLocation==null) {
+            JFileChooser chooser = new JFileChooser();
+            int returnVal = chooser.showOpenDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                fileLocation = chooser.getSelectedFile();
+            }
         }
         List<String> fileLines = new ArrayList<>();
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileLocation));
             String st;
             while((st = bufferedReader.readLine()) != null){
                 if(st.contains("GNGGA")){
@@ -41,20 +81,26 @@ public class FileLoader {
     public List<Coordinate> getCoordinatesLoadedCoordinates (){
         List<Coordinate> coordinates = new ArrayList<>();
         for(String st : fileLines){
-            coordinates.add(parseToCoordinatePoint(st));
+            Coordinate parsedCoordinate = parseToCoordinatePoint(st);
+            if(parsedCoordinate!= null) {
+                coordinates.add(parseToCoordinatePoint(st));
+            }
         }
         return coordinates;
     }
 
     private Coordinate parseToCoordinatePoint (String st) {
-        //System.out.println(st.length());
         if(st.length()!=79){
             return null;
         }
         Double latitude = Double.parseDouble(st.substring(17, 19))+Double.parseDouble(st.substring(19,27))/60.000;
-        Double longitude = Double.parseDouble(st.substring(30,33))+Double.parseDouble(st.substring(33,41))/60.00;
+        Double longitude = Double.parseDouble(st.substring(30,33))+Double.parseDouble(st.substring(33,41))/60.000;
         return new Coordinate(latitude, longitude);
     }
 
+    public Coordinate getLastCoordinate () {
+        List<String> tempFileLines = readFile();
+        return parseToCoordinatePoint(tempFileLines.get(tempFileLines.size()-1));
+    }
 }
 

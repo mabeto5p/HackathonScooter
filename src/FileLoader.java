@@ -10,12 +10,16 @@ public class FileLoader {
 
 
     public FileLoader(){
-        readAndParseFile();
         fileLines = readFile();
     }
 
     public List<String> readFile(){
-        File file = new File("C:\\Users\\mabet\\Documents\\Hackathon\\storFirkant.ubx");
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(null);
+        File file = null;
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            file = chooser.getSelectedFile();
+        }
         List<String> fileLines = new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -41,33 +45,6 @@ public class FileLoader {
         }
         return coordinates;
     }
-
-    public List<Coordinate> readAndParseFile() {
-        JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(null);
-        File file = null;
-        if(returnVal == JFileChooser.APPROVE_OPTION){
-            file = chooser.getSelectedFile();
-        }
-        //File file = new File("C:\\Users\\mabet\\Documents\\Hackathon\\storFirkant.ubx");
-
-        List<Coordinate> coordinateList = new ArrayList<>();
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String st;
-            while((st = bufferedReader.readLine()) != null){
-                if(st.contains("GNGGA")){
-                    coordinateList.add(parseToCoordinatePoint(st));
-                    }
-                }
-            }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return coordinateList;
-        }
 
     private Coordinate parseToCoordinatePoint (String st) {
         //System.out.println(st.length());

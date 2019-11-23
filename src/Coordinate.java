@@ -1,6 +1,7 @@
 public class Coordinate {
     private double latitude;
     private double longitude;
+    private double bearing = 90;
 
     public Coordinate(double latitude, double longitude){
         this.latitude = latitude;
@@ -23,8 +24,18 @@ public class Coordinate {
         this.latitude = latitude;
     }
 
+
+
     @Override
     public String toString() {
         return "(" + getLatitude() +"," + getLongitude() +")";
+    }
+
+    public double getBearing() {
+        return bearing;
+    }
+
+    public void setBearing(double bearing) {
+        this.bearing = bearing;
     }
 }

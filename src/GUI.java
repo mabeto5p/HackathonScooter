@@ -4,10 +4,12 @@ import java.awt.*;
 public class GUI implements Observer {
     JFrame frame;
     JLabel label;
+    Object object;
 
     SquareMap squareMap;
 
     public GUI(SquareMap squareMap){
+        object = new Object(1);
         this.squareMap = squareMap;
         initializeGUI();
     }
@@ -27,7 +29,7 @@ public class GUI implements Observer {
 
     @Override
     public void update (Coordinate coordinate) {
-        boolean isContained = checkIfCoordinateIsContained();
+        boolean isContained = checkIfCoordinateIsContained(coordinate);
         if (isContained) {
             label.setBackground(new Color(0, 255, 0));
         } else {
@@ -36,7 +38,7 @@ public class GUI implements Observer {
         System.out.println(coordinate);
     }
 
-    private boolean checkIfCoordinateIsContained () {
-        return true;
+    private boolean checkIfCoordinateIsContained (Coordinate coordinate) {
+        return squareMap.isObjectContained(object, coordinate);
     }
 }

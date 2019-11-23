@@ -7,9 +7,9 @@ public class SquareMap {
         this.squares = squares;
     }
 
-    public boolean isObjectContained(Object object){
+    public boolean isObjectContained(Object object, Coordinate coordinate){
         for (Square square: squares){
-            if (square.isContained(object)){
+            if (square.isContained(object, coordinate)){
                 return true;
             }
         }

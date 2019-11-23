@@ -12,10 +12,10 @@ public class Square {
         createSquare();
     }
 
-    public boolean isContained(Object object){
-        Coordinate coordinate = Haversine.inverseHaversine(object.getCoordinate(), object.getBearing(), object.getDistance());
-        boolean isCoordinateInXInterval = coordinate.getLatitude() <= getMax().getLatitude() && coordinate.getLatitude() >= getMin().getLatitude();
-        boolean isCoordinateInYInterval = coordinate.getLongitude() <= getMax().getLongitude() && coordinate.getLongitude() >= getMin().getLongitude();
+    public boolean isContained(Object object, Coordinate coordinate){
+        Coordinate objectEnd = Haversine.inverseHaversine(coordinate, coordinate.getBearing(), object.getDistance());
+        boolean isCoordinateInXInterval = objectEnd.getLatitude() <= getMax().getLatitude() && objectEnd.getLatitude() >= getMin().getLatitude();
+        boolean isCoordinateInYInterval = objectEnd.getLongitude() <= getMax().getLongitude() && objectEnd.getLongitude() >= getMin().getLongitude();
         return isCoordinateInXInterval && isCoordinateInYInterval;
     }
 

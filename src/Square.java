@@ -1,19 +1,23 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observer;
 
 public class Square {
     private Coordinate Min;
     private Coordinate Max;
-    private ArrayList<Coordinate> coordinates;
+    private List<Coordinate> coordinates;
 
-    public Square(ArrayList<Coordinate> coordinates){
+    public Square(List<Coordinate> coordinates){
         this.coordinates = coordinates;
         createSquare();
     }
 
-    public boolean isContained(Coordinate coordinate){
-        boolean isCoordinateInXInterval = coordinate.getLatitude() < getMax().getLatitude() && coordinate.getLatitude() > getMin().getLatitude();
-        boolean isCoordinateInYInterval = coordinate.getLongitude() < getMax().getLongitude() && coordinate.getLongitude() > getMin().getLongitude();
+    public boolean isContained(Object object){
+        Coordinate coordinate = Haversine.inverseHaversine(object.getCoordinate(), object.getBearing(), object.getDistance());
+        boolean isCoordinateInXInterval = coordinate.getLatitude() <= getMax().getLatitude() && coordinate.getLatitude() >= getMin().getLatitude();
+        boolean isCoordinateInYInterval = coordinate.getLongitude() <= getMax().getLongitude() && coordinate.getLongitude() >= getMin().getLongitude();
         return isCoordinateInXInterval && isCoordinateInYInterval;
+
     }
 
     public void createSquare() {
@@ -55,5 +59,10 @@ public class Square {
 
     public void setMax(Coordinate max) {
         this.Max = max;
+    }
+
+    @Override
+    public String toString() {
+        return getMin() + " and " + getMax();
     }
 }

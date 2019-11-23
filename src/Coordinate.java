@@ -22,4 +22,9 @@ public class Coordinate {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    @Override
+    public String toString() {
+        return "(" + getLatitude() +"," + getLongitude() +")";
+    }
 }

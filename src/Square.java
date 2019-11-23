@@ -17,7 +17,6 @@ public class Square {
         boolean isCoordinateInXInterval = coordinate.getLatitude() <= getMax().getLatitude() && coordinate.getLatitude() >= getMin().getLatitude();
         boolean isCoordinateInYInterval = coordinate.getLongitude() <= getMax().getLongitude() && coordinate.getLongitude() >= getMin().getLongitude();
         return isCoordinateInXInterval && isCoordinateInYInterval;
-
     }
 
     public void createSquare() {

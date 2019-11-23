@@ -6,8 +6,8 @@ import java.util.List;
 public class FileLoader {
     List<Observer> observers;
 
-    List<String> fileLines;
     File fileLocation = null;
+    private Square square;
 
     public FileLoader(){
         JFileChooser chooser = new JFileChooser();
@@ -40,7 +40,6 @@ public class FileLoader {
     }
 
 
-
     public void readFile(long fileLength){
         String line = null;
         try {
@@ -66,11 +65,18 @@ public class FileLoader {
     }
 
 
-    public List<String> readFile(){
-
+    public List<String> readSquareFile(){
+        File squareFile = null;
+        if(square == null) {
+            JFileChooser chooser = new JFileChooser();
+            int returnVal = chooser.showOpenDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                squareFile = chooser.getSelectedFile();
+            }
+        }
         List<String> fileLines = new ArrayList<>();
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileLocation));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(squareFile));
             String st;
             while((st = bufferedReader.readLine()) != null){
                 if(st.contains("GNGGA")){
@@ -86,9 +92,9 @@ public class FileLoader {
         return fileLines;
     }
 
-    public List<Coordinate> getCoordinatesLoadedCoordinates (){
+    public List<Coordinate> getSquareCoordinatesLoadedCoordinates (){
         List<Coordinate> coordinates = new ArrayList<>();
-        for(String st : fileLines){
+        for(String st : readSquareFile()){
             Coordinate parsedCoordinate = parseToCoordinatePoint(st);
             if(parsedCoordinate!= null) {
                 coordinates.add(parseToCoordinatePoint(st));

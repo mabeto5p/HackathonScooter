@@ -1,4 +1,6 @@
 public interface Observer {
 
-    void update(boolean isContained);
+    void update(Coordinate coordinate);
+
+
 }

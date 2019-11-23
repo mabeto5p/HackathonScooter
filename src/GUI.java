@@ -23,11 +23,16 @@ public class GUI implements Observer {
     }
 
     @Override
-    public void update(boolean isContained) {
+    public void update (Coordinate coordinate) {
+        boolean isContained = checkIfCoordinateIsContained();
         if (isContained) {
             label.setBackground(new Color(0, 255, 0));
         } else {
             label.setBackground(new Color(255, 0, 0));
         }
+    }
+
+    private boolean checkIfCoordinateIsContained () {
+        return true;
     }
 }

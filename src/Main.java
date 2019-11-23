@@ -4,9 +4,12 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(Haversine.distance(56.17203083, 10.18773750, 56.17206200, 10.18766933)*1000);
+        FileLoader fileLoader = new FileLoader();
+        fileLoader.addObserver(new GUI());
+        /*System.out.println(Haversine.distance(56.17203083, 10.18773750, 56.17206200, 10.18766933)*1000);
         Coordinate coordinate = Haversine.inverseHaversine(new Coordinate(56.17203083, 10.18773750 ), 90.00000, 0.000000);
         System.out.println(Haversine.distance(coordinate.getLatitude(), coordinate.getLongitude(), 56.17206200, 10.18766933)*1000);
+
         GUI gui = new GUI();
         gui.update(true);
         FileLoader fileLoader = new FileLoader();
@@ -21,7 +24,7 @@ public class Main {
         while(true){
             System.out.println(fileLoader.getLastCoordinate().toString());
 
-        }
+        }*/
         //System.out.println(coordinates.get(0).getLatitude()+", " + coordinates.get(0).getLongitude());
     }
 }

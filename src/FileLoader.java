@@ -4,11 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileLoader {
+    List<Observer> observers;
+
     List<String> fileLines;
     File fileLocation = null;
 
     public FileLoader(){
-        fileLines = readFile();
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            fileLocation = chooser.getSelectedFile();
+        }
+        observers = new ArrayList<>();
+    }
+
+    public void addObserver(Observer observer){
+        observers.add(observer);
     }
 
     long previousFileLength = 0;
@@ -37,7 +48,10 @@ public class FileLoader {
             in.skip(fileLength);
             while((line = in.readLine()) != null)
             {
-                makeDataPointForStringAndAddItToList(line);
+                if(line.contains("GNGGA")){
+                    Coordinate coordinate = parseToCoordinatePoint(line);
+                    doStuffWithCoordinate();
+                }
             }
             in.close();
         } catch (Exception ex){
@@ -45,21 +59,15 @@ public class FileLoader {
         }
     }
 
-    private void makeDataPointForStringAndAddItToList (String line) {
-        if(line.contains("GNGGA")){
-            Coordinate coordinate = parseToCoordinatePoint(line);
-            System.out.println(coordinate.toString());
+    private void doStuffWithCoordinate () {
+        for(Observer observer : observers){
+            //observer.update();
         }
     }
 
+
     public List<String> readFile(){
-        if(fileLocation==null) {
-            JFileChooser chooser = new JFileChooser();
-            int returnVal = chooser.showOpenDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                fileLocation = chooser.getSelectedFile();
-            }
-        }
+
         List<String> fileLines = new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileLocation));
@@ -96,11 +104,6 @@ public class FileLoader {
         Double latitude = Double.parseDouble(st.substring(17, 19))+Double.parseDouble(st.substring(19,27))/60.000;
         Double longitude = Double.parseDouble(st.substring(30,33))+Double.parseDouble(st.substring(33,41))/60.000;
         return new Coordinate(latitude, longitude);
-    }
-
-    public Coordinate getLastCoordinate () {
-        List<String> tempFileLines = readFile();
-        return parseToCoordinatePoint(tempFileLines.get(tempFileLines.size()-1));
     }
 }
 

@@ -49,7 +49,9 @@ public class FileLoader {
             {
                 if(line.contains("GNGGA")){
                     Coordinate coordinate = parseToCoordinatePoint(line);
-                    doStuffWithCoordinate();
+                    if(coordinate!=null) {
+                        doStuffWithCoordinate(coordinate);
+                    }
                 }
             }
             in.close();
@@ -58,9 +60,9 @@ public class FileLoader {
         }
     }
 
-    private void doStuffWithCoordinate () {
+    private void doStuffWithCoordinate (Coordinate coordinate) {
         for(Observer observer : observers){
-            //observer.update();
+            observer.update(coordinate);
         }
     }
 

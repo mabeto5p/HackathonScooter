@@ -5,7 +5,10 @@ public class GUI implements Observer {
     JFrame frame;
     JLabel label;
 
-    public GUI(){
+    SquareMap squareMap;
+
+    public GUI(SquareMap squareMap){
+        this.squareMap = squareMap;
         initializeGUI();
     }
 
@@ -30,6 +33,7 @@ public class GUI implements Observer {
         } else {
             label.setBackground(new Color(255, 0, 0));
         }
+        System.out.println(coordinate);
     }
 
     private boolean checkIfCoordinateIsContained () {
